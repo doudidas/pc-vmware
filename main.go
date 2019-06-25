@@ -19,7 +19,6 @@ func main() {
 	body := getCatalogTemplate(token, info.CatalogItemID)
 	color.Green("catalogItem form done !")
 	requestCatalogItem(token, info, body)
-	// requestAction(token, "9c32adef-f768-4faa-a934-a2356d0fe3fd", "1fc45d5d-17d6-4a71-8286-acf6e19a8228", body)
 }
 
 func requestCatalogItem(token string, info CatalogItemInformations, body []byte) {
