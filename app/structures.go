@@ -68,18 +68,20 @@ type Request struct {
 	Phase           string `json:"phase"`
 }
 
-// TokenCredantial is the body structure used for token request
-type TokenCredantial struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Tenant   string `json:"tenant"`
-}
-
 // CatalogItemInformations has information mendatory to request a catalog item on vRA
 type CatalogItemInformations struct {
 	CatalogItemID string `json:"catalogItemID"`
 	SubtenantID   string `json:"subtenantID"`
 	Requester     string `json:"requester"`
+	Body          []byte `json:"body"`
+}
+
+// ResourceActionInformations has information mendatory to request a catalog item on vRA
+type ResourceActionInformations struct {
+	ActionID    string `json:"actionID"`
+	SubtenantID string `json:"subtenantID"`
+	Requester   string `json:"requester"`
+	Body        []byte `json:"body"`
 }
 
 // FormDetail is vRA response when you ask for formDetail
@@ -118,4 +120,23 @@ type FormDetail struct {
 	} `json:"layout"`
 	Values        interface{} `json:"values"`
 	FieldPrefixes interface{} `json:"fieldPrefixes"`
+}
+
+// VraEndpoint is the body structure used for token request
+type VraEndpoint struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Tenant   string `json:"tenant"`
+	Fqdn     string `json:"fqdn"`
+}
+
+// APIError is the format of error response from vRA
+type APIError struct {
+	Errors []struct {
+		Code          int         `json:"code"`
+		Source        interface{} `json:"source"`
+		Message       string      `json:"message"`
+		SystemMessage string      `json:"systemMessage"`
+		MoreInfoURL   interface{} `json:"moreInfoUrl"`
+	} `json:"errors"`
 }

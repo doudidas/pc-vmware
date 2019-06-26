@@ -1,0 +1,6 @@
+{
+    "fqdn"    : "cava-n-80-154.eng.vmware.com",
+    "password": "VMware1!",
+    "tenant"  : "vsphere.local",
+    "username": "etopin@vsphere.local"
+}

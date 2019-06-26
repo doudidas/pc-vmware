@@ -44,6 +44,12 @@ func GET(url, token string) []byte {
 	if debug {
 		fmt.Println(string(output))
 	}
+	var bodyAsError APIError
+	json.Unmarshal(body, &bodyAsError)
+	if bodyAsError.Errors != nil {
+		color.Red(string(body))
+		panic("ERROR with API" + string(body))
+	}
 	return output
 }
 
@@ -83,13 +89,18 @@ func POST(url, token string, bytesRepresentation []byte) ([]byte, http.Header) {
 }
 
 // getToken will read the token file and will use it to do any API call
-func getToken() string {
-	url := "https://cava-n-80-154.eng.vmware.com/identity/api/tokens"
+func getToken(endpoint VraEndpoint) string {
+	url := "https://" + endpoint.Fqdn + "/identity/api/tokens"
 	color.Cyan("GET TOKEN")
 	color.Magenta("url: %s", url)
-	message := getTokenCredantialFromSecretFile()
 
-	bytesRepresentation, err := json.Marshal(message)
+	body := map[string]string{
+		"username": endpoint.Username,
+		"password": endpoint.Password,
+		"tenant":   endpoint.Tenant,
+	}
+
+	bytesRepresentation, err := json.Marshal(body)
 	if err != nil {
 		log.Fatalln(err)
 	}
