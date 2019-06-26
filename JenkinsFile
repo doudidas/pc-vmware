@@ -1,0 +1,18 @@
+node {  
+    stage ('Clone project') {
+        git url: 'https://github.com/doudidas/pc-vmware.git'
+    }
+    
+    stage('run test') { 
+        if (isUnix()) {
+            def uname = sh script: 'uname', returnStdout: true
+            if (uname.startsWith("Darwin")) {
+                sh label: 'Run', script: 'cd bin; ./app_darwin_amd64'
+            } else {
+                sh label: 'Run', script: 'cd bin; ./app_linux_amd64'
+            }
+        } else {
+        bat 'cd bin; app_windows_amd64.exe'
+        }
+    }
+}
