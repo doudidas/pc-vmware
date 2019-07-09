@@ -10,7 +10,6 @@ import (
 )
 
 var url, token string
-var outputError OutputError
 
 func init() {
 
